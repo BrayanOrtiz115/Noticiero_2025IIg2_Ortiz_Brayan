@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="footer-section">
           <div className="footer-brand">
             <Newspaper className="footer-logo" />
-            <h3>Noticiero Digital</h3>
+            <h3>NEXUS NEWS</h3>
           </div>
           <p className="footer-description">
             Tu fuente confiable de información veraz y oportuna. 
@@ -19,15 +19,15 @@ export default function Footer() {
           <div className="footer-contact">
             <div className="contact-item">
               <Mail size={16} />
-              <span>contacto@noticiero.com</span>
+              <span>noticierosancocho@noticiero.com</span>
             </div>
             <div className="contact-item">
               <Phone size={16} />
-              <span>+57 300 123 4567</span>
+              <span>+57 320 404 8966</span>
             </div>
             <div className="contact-item">
               <MapPin size={16} />
-              <span>Bogotá, Colombia</span>
+              <span>Florencia Caquetá, Colombia</span>
             </div>
           </div>
         </div>
@@ -73,7 +73,7 @@ export default function Footer() {
       <div className="footer-bottom">
         <div className="footer-bottom-content">
           <p>&copy; 2025 Noticiero Digital. Todos los derechos reservados.</p>
-          <p>Desarrollado con ❤️ usando React & Firebase</p>
+          <p>Desarrollado con Amor usando React & Firebase</p>
         </div>
       </div>
     </footer>
