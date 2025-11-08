@@ -12,11 +12,16 @@
   background-repeat: no-repeat;
   color: white;
   font-family: 'Inter', sans-serif;
-  overflow: hidden;
+  overflow-y: auto; /* Cambiado de hidden a auto para permitir scroll */
   z-index: 9999; /* se asegura de estar encima de todo */
+  padding: 20px 0; /* Espacio para que no quede pegado a los bordes */
 }
 
-
+.bg-circles {
+  position: fixed; /* Mantener el fondo fijo */
+  inset: 0;
+  z-index: 1;
+}
 
 .bg-circles::before,
 .bg-circles::after {
@@ -59,14 +64,36 @@
   padding: 3rem;
   width: 100%;
   max-width: 420px;
+  max-height: 90vh; /* Altura máxima */
+  overflow-y: auto; /* Scroll interno si es necesario */
   backdrop-filter: blur(20px);
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
   animation: fadeIn 0.8s ease-out;
+  margin: 20px 0; /* Espacio adicional */
 }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
+}
+
+/* Personalizar scrollbar para la tarjeta */
+.login-futurista-card::-webkit-scrollbar {
+  width: 6px;
+}
+
+.login-futurista-card::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.login-futurista-card::-webkit-scrollbar-thumb {
+  background: rgba(102, 126, 234, 0.6);
+  border-radius: 3px;
+}
+
+.login-futurista-card::-webkit-scrollbar-thumb:hover {
+  background: rgba(102, 126, 234, 0.8);
 }
 
 /* Encabezado */
@@ -186,13 +213,23 @@
   margin-bottom: 1.5rem;
 }
 
-/* Usuarios demo */
+/* Usuarios demo - Aumentar espacio y mejorar visibilidad */
 .demo-info {
-  margin-top: 2rem;
+  margin-top: 2.5rem;
+  padding: 1.5rem;
   text-align: center;
   font-size: 0.85rem;
   color: #d1d5db;
   line-height: 1.5;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.demo-info p:first-child {
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: #fff;
 }
 
 .demo-info strong {
@@ -203,10 +240,16 @@
 @media (max-width: 480px) {
   .login-futurista-card {
     padding: 2rem 1.5rem;
+    margin: 10px; /* Menos margen en móviles */
   }
 
   .titulo-login {
     font-size: 1.6rem;
+  }
+  
+  .demo-info {
+    margin-top: 2rem;
+    padding: 1rem;
   }
 }
 
@@ -259,4 +302,3 @@
   color: #764ba2;
   text-decoration: underline;
 }
-
