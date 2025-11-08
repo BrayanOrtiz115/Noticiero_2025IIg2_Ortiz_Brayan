@@ -84,27 +84,8 @@ export default function Dashboard({ usuario }) {
     cargarNoticias(); // Recargar noticias después de guardar
   };
 
-  // 🔥 FORZAR MOSTRAR BOTÓN TEMPORALMENTE - SI AÚN NO APARECE
-  const renderBotonesForzados = () => (
-    <div style={{ 
-      display: 'flex', 
-      gap: '1rem', 
-      marginBottom: '2rem',
-      padding: '1rem',
-      background: '#f8fafc',
-      borderRadius: '12px',
-      border: '2px dashed #667eea'
-    }}>
-      <button onClick={handleNuevaNoticia} className="btn-nueva" style={{margin: 0}}>
-        <Plus size={20} />
-        Nueva Noticia (Forzado 1)
-      </button>
-      <button onClick={handleNuevaNoticia} className="btn-nueva" style={{margin: 0}}>
-        <Plus size={20} />
-        Nueva Noticia (Forzado 2)
-      </button>
-    </div>
-  );
+ 
+
 
   return (
     <div className="dashboard">
