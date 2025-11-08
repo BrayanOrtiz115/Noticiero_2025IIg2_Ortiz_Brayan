@@ -84,16 +84,10 @@ export default function Dashboard({ usuario }) {
     cargarNoticias(); // Recargar noticias después de guardar
   };
 
- 
-
-
   return (
     <div className="dashboard">
       {!mostrarFormulario ? (
         <>
-          {/* 🔥 BOTONES FORZADOS TEMPORALES - ELIMINAR DESPUÉS DE TESTEAR */}
-          {renderBotonesForzados()}
-
           <div className="dashboard-header">
             <div>
               <h2 className="dashboard-title">
