@@ -39,8 +39,7 @@ const Home = () => {
       subtitle: "Arte, música y revolución digital",
       media: cultureImg,
       color: "#ffaa00",
-      text: `La cultura global vive una nueva edad de oro. 
-      Artistas de todo el mundo fusionan tradición y tecnología para crear obras que trascienden fronteras.`,
+      text: `La cultura global vive una nueva edad de oro. Artistas de todo el mundo fusionan tradición y tecnología para crear obras que trascienden fronteras.`,
       link: "/cultura",
     },
     {

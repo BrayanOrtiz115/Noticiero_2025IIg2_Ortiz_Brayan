@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, FileText, CheckCircle, Clock, Ban } from 'lucide-react';
+import { Plus, FileText, CheckCircle, Clock, Ban, LogOut, User } from 'lucide-react';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import db from '../../Firebase/ConfigFirebase';
 import ListaNoticias from '../ListaNoticias/ListaNoticias';
 import FormularioNoticia from '../FormularioNoticia/FormularioNoticia';
 import './Dashboard.css';
 
-export default function Dashboard({ usuario }) {
+export default function Dashboard({ usuario, onLogout }) {
   const [noticias, setNoticias] = useState([]);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [noticiaEditar, setNoticiaEditar] = useState(null);
@@ -81,7 +81,12 @@ export default function Dashboard({ usuario }) {
     console.log('🚪 Cerrando formulario, recargando noticias...');
     setMostrarFormulario(false);
     setNoticiaEditar(null);
-    cargarNoticias(); // Recargar noticias después de guardar
+    cargarNoticias();
+  };
+
+  const handleLogout = () => {
+    console.log('🚪 Cerrando sesión...');
+    onLogout(); // ✅ Usar la función de logout de App.jsx
   };
 
   return (
@@ -98,14 +103,21 @@ export default function Dashboard({ usuario }) {
                   ? 'Gestiona y publica todas las noticias' 
                   : 'Crea y envía tus reportajes para revisión'}
               </p>
-              <p style={{ color: '#64748b', fontSize: '0.9rem', marginTop: '0.5rem' }}>
-                Usuario: {usuario.nombre} ({usuario.email})
-              </p>
+              <div className="user-info">
+                <User size={16} />
+                <span>{usuario.nombre} ({usuario.email}) - {usuario.rol}</span>
+              </div>
             </div>
-            <button onClick={handleNuevaNoticia} className="btn-nueva">
-              <Plus size={20} />
-              Nueva Noticia
-            </button>
+            <div className="header-actions">
+              <button onClick={handleNuevaNoticia} className="btn-nueva">
+                <Plus size={20} />
+                Nueva Noticia
+              </button>
+              <button onClick={handleLogout} className="btn-logout">
+                <LogOut size={18} />
+                Cerrar Sesión
+              </button>
+            </div>
           </div>
 
           {/* 📊 ESTADÍSTICAS */}
@@ -158,7 +170,6 @@ export default function Dashboard({ usuario }) {
             onEditar={handleEditarNoticia}
             onActualizar={cargarNoticias}
           />
-
         </>
       ) : (
         <FormularioNoticia

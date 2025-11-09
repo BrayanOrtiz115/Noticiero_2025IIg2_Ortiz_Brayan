@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LogIn, User, Lock, Home } from 'lucide-react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../../Firebase/ConfigFirebase';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import './Login.css';
 
 export default function Login({ onLogin }) {
@@ -12,6 +12,16 @@ export default function Login({ onLogin }) {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Verificar si el usuario ya está logueado al cargar el componente
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    if (user) {
+      // Si ya está logueado, redirigir al dashboard/admin
+      navigate('/admin');
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,11 +44,21 @@ export default function Login({ onLogin }) {
         };
       }
 
-      onLogin({
+      const userInfo = {
         uid: user.uid,
         email: user.email,
         ...userData
-      });
+      };
+
+      // ✅ GUARDAR EN LOCALSTORAGE
+      localStorage.setItem('user', JSON.stringify(userInfo));
+      
+      // ✅ LLAMAR LA FUNCIÓN onLogin DEL PROP
+      onLogin(userInfo);
+      
+      // ✅ REDIRIGIR AL ADMIN/DASHBOARD DESPUÉS DE LOGIN EXITOSO
+      navigate('/admin');
+      
     } catch (err) {
       console.error('Error de login:', err);
       setError('Credenciales incorrectas. Verifica tu email y contraseña.');

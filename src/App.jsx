@@ -42,12 +42,16 @@ function App() {
           
           if (userDoc.exists()) {
             const userData = userDoc.data()
-            setUsuario({
+            const userInfo = {
               uid: user.uid,
               email: user.email,
               nombre: userData.nombre || user.email.split('@')[0],
               rol: userData.rol || 'Reportero'
-            })
+            }
+            
+            // ✅ SINCRONIZAR CON LOCALSTORAGE
+            localStorage.setItem('user', JSON.stringify(userInfo))
+            setUsuario(userInfo)
             console.log('✅ Usuario cargado desde Firestore:', userData)
           } else {
             const nuevoUsuario = {
@@ -58,22 +62,32 @@ function App() {
             }
             
             await setDoc(doc(db, 'usuarios', user.uid), nuevoUsuario)
-            setUsuario({
+            const userInfo = {
               uid: user.uid,
               ...nuevoUsuario
-            })
+            }
+            
+            // ✅ SINCRONIZAR CON LOCALSTORAGE
+            localStorage.setItem('user', JSON.stringify(userInfo))
+            setUsuario(userInfo)
             console.log('✅ Nuevo usuario creado en Firestore:', nuevoUsuario)
           }
         } catch (error) {
           console.error('❌ Error cargando usuario:', error)
-          setUsuario({
+          const userInfo = {
             uid: user.uid,
             email: user.email,
             nombre: user.email.split('@')[0],
             rol: user.email.includes('editor') ? 'Editor' : 'Reportero'
-          })
+          }
+          
+          // ✅ SINCRONIZAR CON LOCALSTORAGE
+          localStorage.setItem('user', JSON.stringify(userInfo))
+          setUsuario(userInfo)
         }
       } else {
+        // ✅ LIMPIAR LOCALSTORAGE CUANDO NO HAY USUARIO
+        localStorage.removeItem('user')
         setUsuario(null)
       }
       setCargando(false)
@@ -282,7 +296,7 @@ function App() {
             usuario ? (
               <div className="app-administrativo">
                 <Header usuario={usuario} onLogout={handleLogout} />
-                <Dashboard usuario={usuario} />
+                <Dashboard usuario={usuario} onLogout={handleLogout} />
               </div>
             ) : (
               <Navigate to="/login" />
